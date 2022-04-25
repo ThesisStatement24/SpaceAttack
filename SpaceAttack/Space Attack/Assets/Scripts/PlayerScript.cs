@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -13,9 +14,11 @@ public class PlayerScript : MonoBehaviour
     public GameObject bullet;
     public GameObject SpawnPoint;
     public GameObject Player;
-    public int Lives;
+    public int LifeCount;
     public bool oneGun;
     public bool twoGuns;
+
+    public Text LivesText;
 
     public float laserFireRate;
     float laserCooldown = 0;
@@ -26,7 +29,9 @@ public class PlayerScript : MonoBehaviour
 
         oneGun = true;
         rb = GetComponent<Rigidbody2D>();
-        Lives = 3;
+        LivesText = GameObject.FindGameObjectWithTag("LifeText").GetComponent<Text>();
+        LifeCount = 3;
+        LivesText.text = "Lives: " + LifeCount;
 
     }
 
@@ -40,7 +45,7 @@ public class PlayerScript : MonoBehaviour
 
         }
 
-        if (Lives == 0)
+        if (LifeCount == 0)
         {
             Destroy(this.gameObject);
             UnityEngine.SceneManagement.SceneManager.LoadScene(2);
@@ -70,13 +75,13 @@ public class PlayerScript : MonoBehaviour
     {
 
         laserCooldown -= Time.deltaTime;
-        if (laserCooldown <= 0 && Input.GetButton("Fire1") && oneGun == true)
+        if (laserCooldown <= 0 && Input.GetKeyDown(KeyCode.Space) && oneGun == true)
         {
             laserCooldown = laserFireRate;
             Instantiate(bullet, Gun1.position, Gun1.rotation); // Create a new bullet
         }
 
-        if (laserCooldown <= 0 && Input.GetButton("Fire1") && twoGuns == true)
+        if (laserCooldown <= 0 && Input.GetKeyDown(KeyCode.Space) && twoGuns == true)
         {
             laserCooldown = laserFireRate;
             Instantiate(bullet, Gun2.position, Gun2.rotation); // Create a new bullet
@@ -91,8 +96,9 @@ public class PlayerScript : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
 
-            Lives--;
+            LifeCount--;
             Player.transform.position = SpawnPoint.transform.position;
+            LivesText.text = "Lives: " + LifeCount;
             Destroy(collision.gameObject);
 
         }
@@ -100,8 +106,9 @@ public class PlayerScript : MonoBehaviour
         if (collision.gameObject.tag == "EnemyBullet")
         {
 
-            Lives--;
+            LifeCount--;
             Player.transform.position = SpawnPoint.transform.position;
+            LivesText.text = "Lives: " + LifeCount;
             Destroy(collision.gameObject);
 
         }
@@ -109,8 +116,9 @@ public class PlayerScript : MonoBehaviour
         if (collision.gameObject.tag == "Asteroid")
         {
 
-            Lives--;
+            LifeCount--;
             Player.transform.position = SpawnPoint.transform.position;
+            LivesText.text = "Lives: " + LifeCount;
             Destroy(collision.gameObject);
 
         }

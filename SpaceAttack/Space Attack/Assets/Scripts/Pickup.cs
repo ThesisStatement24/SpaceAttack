@@ -28,7 +28,6 @@ public class Pickup : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("HI");
             Guns2.twoGuns = true;
             Destroy(this.gameObject);
         }

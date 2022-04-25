@@ -9,7 +9,7 @@ public class ScoreManager : MonoBehaviour
 
     public int score;
 
-    public static int highscore;
+    public static int highScore;
 
     public Text text;
 
@@ -48,12 +48,19 @@ public class ScoreManager : MonoBehaviour
         
 
         PlayerPrefs.SetInt("Score", score);
+        PlayerPrefs.SetInt("HighScore", highScore);
     }
 
     public void AddPoints(int pointsToAdd)
     {
-        Debug.Log("Hello?");
+
         score += pointsToAdd;
+        if(score >= highScore)
+        {
+
+            highScore = score;
+
+        }
 
     }
 }

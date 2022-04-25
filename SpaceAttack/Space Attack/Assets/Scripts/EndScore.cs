@@ -6,13 +6,14 @@ using UnityEngine;
 public class EndScore : MonoBehaviour
 {
 
-    public Text ScoreText;
+    public Text PlayerScoreText;
+    public Text HScoreText;
 
     // Start is called before the first frame update
     void Start()
     {
 
-        ScoreText = GetComponent<Text>();
+
 
     }
 
@@ -20,7 +21,8 @@ public class EndScore : MonoBehaviour
     void Update()
     {
 
-        ScoreText.text = "Your Score: " + PlayerPrefs.GetInt("Score").ToString();
+        PlayerScoreText.text = "Your Score: " + PlayerPrefs.GetInt("Score").ToString();
+        HScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore").ToString();
 
     }
 }
